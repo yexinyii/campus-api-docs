@@ -29,6 +29,14 @@
   pip install -r requirements.txt
   python app.py
   访问：http://127.0.0.1:5000
+
+- ## 🐳 一键 Docker 启动
+  
+  如果你本地安装了 Docker 和 Docker Compose，只需两条命令启动靶场：
+  
+  ```bash
+  docker-compose build
+  docker-compose up -d
   
   ## 文档目录
   
@@ -39,3 +47,28 @@
   ## 声明
   
   本项目仅用于学习与教学，禁止用于非法渗透，使用后果自负。
+  ```
+
+访问靶场：
+
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+停止靶场：
+
+bash
+
+运行
+
+```
+docker-compose down
+```
+
+## 文档目录
+
+/docs/01-统一认证.md
+/docs/02-教务系统认证.md
+/docs/03-学工系统认证.md
+
+## 声明
+
+本项目仅用于学习与教学，禁止用于非法渗透，使用后果自负。
