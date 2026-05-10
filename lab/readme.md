@@ -63,11 +63,11 @@ bash
 docker-compose down
 ```
 
-## 文档目录
+## 具体接口文档目录
 
-/docs/01-统一认证.md
-/docs/02-教务系统认证.md
-/docs/03-学工系统认证.md
+/api/01-统一认证.md
+/api/02-教务系统认证.md
+/api/03-学工系统认证.md
 
 ## 声明
 
