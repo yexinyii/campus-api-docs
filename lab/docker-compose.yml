@@ -1,8 +1,20 @@
 version: '3'
-
 services:
   campus-lab:
     build: .
+    volumes:
+      # 挂载数据库，持久化数据
+      - ./data:/app/data
+    environment:
+      - FLASK_HOST=0.0.0.0
+      - FLASK_PORT=5000
+      - FLASK_ENV=production
     ports:
       - "5000:5000"
     restart: always
+    # 健康检查判断服务是否正常运行
+    healthcheck:
+      test: ["curl", "-s", "http://127.0.0.1:5000"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
