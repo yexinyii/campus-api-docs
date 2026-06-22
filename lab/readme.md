@@ -30,22 +30,21 @@
 2. Docker 容器一键部署（标准化环境，统一运行环境）
 
 
-## 环境前置准备（Kali Linux 通用）
-### 方案一：Python本地运行前置依赖
-```bash
-# 更新软件源
+环境前置准备（Kali Linux 通用）
+方案一：Python 本地运行前置依赖
+bash
+运行
 sudo apt update
-# 安装Python运行组件
 sudo apt install python3 python3-pip python3-venv -y
-
-方案二：Docker 容器部署前置依赖bash运行# 更新源并安装docker、docker-compose
+方案二：Docker 容器部署前置依赖
+bash
+运行
 sudo apt update
 sudo apt install docker.io docker-compose -y
-# 启动Docker并设置开机自启
 sudo systemctl start docker
 sudo systemctl enable docker
 方式一：Python 本地启动靶场（虚拟机直跑，无容器）
-进入靶场 lab 目录（路径不可出错）
+进入靶场 lab 目录
 bash
 运行
 cd ~/use_api_project/campus-api-docs/lab
@@ -59,7 +58,7 @@ source venv/bin/activate
 bash
 运行
 pip3 install -r requirements.txt
-初始化数据库（首次运行必须执行，生成账号与业务数据）
+初始化数据库（首次运行必须执行）
 bash
 运行
 python3 init_db.py
@@ -68,28 +67,26 @@ bash
 运行
 python3 app.py
 访问靶场
-打开虚拟机浏览器访问：
-plaintext
-http://127.0.0.1:5000
+浏览器访问：http://127.0.0.1:5000
 日常启停操作
-关闭服务：终端按下 Ctrl + C
+关闭服务：Ctrl + C
 退出虚拟环境：deactivate
-下次快速启动：
+快速启动命令：
 bash
 运行
 cd ~/use_api_project/campus-api-docs/lab
 source venv/bin/activate
 python3 app.py
 方式二：Docker 一键容器部署
-进入 lab 目录（必须在此目录执行 docker-compose 命令，否则报配置文件不存在）
+进入 lab 目录
 bash
 运行
 cd ~/use_api_project/campus-api-docs/lab
-清理旧容器（更新代码后建议执行，首次部署可跳过）
+清理旧容器（更新代码后执行，首次部署可跳过）
 bash
 运行
 sudo docker-compose down
-构建镜像（修改 Dockerfile、代码、依赖后必须执行）
+构建镜像（修改 Dockerfile / 代码 / 依赖后必执行）
 bash
 运行
 sudo docker-compose build --no-cache
@@ -97,23 +94,20 @@ sudo docker-compose build --no-cache
 bash
 运行
 sudo docker-compose up -d
-查看运行状态与日志（排查报错专用）
+查看运行状态与日志
 bash
 运行
-# 查看容器是否正常运行
 sudo docker-compose ps
-# 查看实时运行日志
 sudo docker-compose logs campus-lab
 访问靶场
-plaintext
-http://127.0.0.1:5000
+浏览器访问：http://127.0.0.1:5000
 Docker 常用管理命令
 bash
 运行
 # 仅停止容器，保留数据
 sudo docker-compose stop
 
-# 销毁容器，宿主机data目录数据库文件不会删除（数据持久化）
+# 销毁容器，宿主机data目录数据库文件不会删除
 sudo docker-compose down
 
 # 重启靶场服务
