@@ -24,41 +24,97 @@
 
 - 参数篡改
   
-  ## 快速启动
-  
-  pip install -r requirements.txt
-  python app.py
-  访问：http://127.0.0.1:5000
 
-- ## 🐳 一键 Docker 启动
-  
-  如果你本地安装了 Docker 和 Docker Compose，只需两条命令启动靶场：
-  
-  ```bash
-  docker-compose build
-  docker-compose up -d
-  
-  
-访问靶场：
+提供两种运行方案：
+1. Python 本地直接运行（Kali虚拟机自用，无Docker依赖，推荐新手）
+2. Docker 容器一键部署（标准化环境，统一运行环境）
 
-[http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-停止靶场：
+## 环境前置准备（Kali Linux 通用）
+### 方案一：Python本地运行前置依赖
+```bash
+# 更新软件源
+sudo apt update
+# 安装Python运行组件
+sudo apt install python3 python3-pip python3-venv -y
 
+方案二：Docker 容器部署前置依赖bash运行# 更新源并安装docker、docker-compose
+sudo apt update
+sudo apt install docker.io docker-compose -y
+# 启动Docker并设置开机自启
+sudo systemctl start docker
+sudo systemctl enable docker
+方式一：Python 本地启动靶场（虚拟机直跑，无容器）
+进入靶场 lab 目录（路径不可出错）
 bash
-
 运行
+cd ~/use_api_project/campus-api-docs/lab
+创建并激活虚拟环境
+bash
+运行
+python3 -m venv venv
+source venv/bin/activate
+激活成功后终端前缀会出现 (venv)。
+安装项目全部依赖
+bash
+运行
+pip3 install -r requirements.txt
+初始化数据库（首次运行必须执行，生成账号与业务数据）
+bash
+运行
+python3 init_db.py
+启动靶场服务
+bash
+运行
+python3 app.py
+访问靶场
+打开虚拟机浏览器访问：
+plaintext
+http://127.0.0.1:5000
+日常启停操作
+关闭服务：终端按下 Ctrl + C
+退出虚拟环境：deactivate
+下次快速启动：
+bash
+运行
+cd ~/use_api_project/campus-api-docs/lab
+source venv/bin/activate
+python3 app.py
+方式二：Docker 一键容器部署
+进入 lab 目录（必须在此目录执行 docker-compose 命令，否则报配置文件不存在）
+bash
+运行
+cd ~/use_api_project/campus-api-docs/lab
+清理旧容器（更新代码后建议执行，首次部署可跳过）
+bash
+运行
+sudo docker-compose down
+构建镜像（修改 Dockerfile、代码、依赖后必须执行）
+bash
+运行
+sudo docker-compose build --no-cache
+后台启动靶场容器
+bash
+运行
+sudo docker-compose up -d
+查看运行状态与日志（排查报错专用）
+bash
+运行
+# 查看容器是否正常运行
+sudo docker-compose ps
+# 查看实时运行日志
+sudo docker-compose logs campus-lab
+访问靶场
+plaintext
+http://127.0.0.1:5000
+Docker 常用管理命令
+bash
+运行
+# 仅停止容器，保留数据
+sudo docker-compose stop
 
-```
-docker-compose down
-```
+# 销毁容器，宿主机data目录数据库文件不会删除（数据持久化）
+sudo docker-compose down
 
-## 具体接口文档目录
-
-/api/01-统一认证.md
-/api/02-教务系统认证.md
-/api/03-学工系统认证.md
-
-## 声明
-
-本项目仅用于学习与教学，禁止用于非法渗透，使用后果自负。
+# 重启靶场服务
+sudo docker-compose restart campus-lab
